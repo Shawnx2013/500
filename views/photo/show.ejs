@@ -1,0 +1,8 @@
+<%- include('../partials/deleteForm', {url: `/photos/${photo.id}` }) %>
+
+<figure>
+    <figure>
+        <img height="300" width="200" src="<%= photo.path %>">
+        <figcaption><%= photo.description %></figcaption>
+    </figure>
+</figure>

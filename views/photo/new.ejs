@@ -1,0 +1,11 @@
+<h2 style="text-align: center">添加照片</h2>
+
+<form action="/photos/new" method="POST">
+    <%- include('_form_fields')%>
+    <div class="btn-group" style="margin: 10px 100px 10px 100px;
+                                  display: flex;
+                                  justify-content: center">
+        <a href="/" class="btn btn-danger">取消</a>
+        <button type="submit" class="btn btn-success">添加</button>
+    </div>
+</form>

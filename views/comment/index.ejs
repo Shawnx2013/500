@@ -1,0 +1,54 @@
+<div class="commentContainer">
+<div class="row">
+    <div class=" col-md-offset-2">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    留言板
+                </div>
+                <div class="panel-body">
+                    <form action="/comments" method="POST">
+                        <textarea name="content" required class="form-control" placeholder="write a comment..." rows="3"></textarea>
+                        <br>
+                        <label for="author">By: </label>
+                        <input id="author" type="text" name="author">
+                        <button type="submit" class="btn btn-info pull-right">Post</button>
+                    </form>
+                    <div class="clearfix"></div>
+                    <hr>
+                    <ul class="media-list">
+                        <% comments.forEach(comment => {%>
+                            <li class="media">
+                                <a href="#" class="float-left">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="rounded-circle">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted float-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success">@<%= comment.author %></strong>
+                                    <p>
+                                        <%= comment.content %>
+                                    </p>
+                                </div>
+                            </li>
+                        <% }) %>
+                        <li class="media">
+                            <div class="media-body">
+                                <span class="text-muted pull-right">
+                                    <small class="text-muted">30 min ago</small>
+                                </span>
+                                <strong class="text-success">@LaurenceCorreil</strong>
+                                <p>
+                                    wakakaka
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>

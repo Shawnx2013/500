@@ -1,0 +1,23 @@
+<div class="albumTitle">
+    <h2>我们的小相册</h2>
+    <a href="/photos/new" class="btn btn-outline-success">添加照片</a>
+</div>
+
+<div class="photoContainer">
+    <div class="photoGrid">
+        <% photos.forEach(photo => {%>
+        <div class="photoBox">
+            <div class="card box-shadow">
+                <img class="card-img-top" src="<%= photo.path %>">
+                <div class="card-body">
+                    <h5 class="card-title"><%= photo.postedAt.toISOString().split('T')[0] %></h5>
+                    <p class="card-text"><%= photo.description %></p>
+                    <div class="d-flex justify-content">
+                        <a href="photos/<%= photo.id %>" class="btn btn-outline-secondary">View/Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>

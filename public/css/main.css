@@ -1,0 +1,122 @@
+body{
+    font-family: 'ZCOOL KuaiLe', cursive;
+}
+
+header{
+    font-size: 1.2em;
+}
+
+.dayCounter{
+    text-align: center;
+    width: 500px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dayCounter .card-body{
+    padding: 0;
+}
+
+.albumTitle{
+    text-align: center;
+}
+
+.photos h2{
+    margin-top: 15px;
+    text-align: center;
+}
+
+#carouselControls{
+    background-color: lightskyblue;
+    margin: auto;
+    width: 500px;
+    height: 500px;
+}
+
+.carousel-item img{
+    margin: 2em auto;
+    height: auto;
+    max-height: 450px;
+    max-width: 90%;
+}
+
+.photoContainer{
+    display:block;
+    width: 100%;
+    padding: 0 3%;
+    margin: 20px 0 20px 0;
+}
+
+.photoGrid{
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    margin: 0 auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: flex-start;
+}
+
+.photoBox{
+    position: relative;
+    display: block;
+    width: 49%;
+    margin: 5px 5px 0 0;
+}
+
+.filepond--root{
+    max-height: 450px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+}
+
+.filepond--item {
+    width: calc(50% - .5em);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.commentContainer .row{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 600px;
+}
+
+.comment-wrapper .panel-body {
+    max-height:650px;
+    overflow:auto;
+}
+
+.comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+}
+
+.comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
+}
+
+@media only screen and (min-width: 660px){
+    .photoBox{
+        width: 32%;
+    }
+}
+
+@media only screen and (min-width: 920px){
+    .photoBox{
+        width: 24%;
+    }
+}
