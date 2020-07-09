@@ -13,6 +13,7 @@ const db = mongoose.connection;
 const indexRouter = require('./routes/indexRoute');
 const photoRouter = require('./routes/photoRoute');
 const commentRouter = require('./routes/commentRoute');
+const todoListRouter = require('./routes/todoListRoute');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname+'/views');
@@ -32,6 +33,7 @@ db.on('error', error => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
 
 app.use('/', indexRouter);
+app.use('/list', todoListRouter);
 app.use('/photos', photoRouter);
 app.use('/comments', commentRouter);
 

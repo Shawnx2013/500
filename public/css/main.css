@@ -1,17 +1,31 @@
 body{
     font-family: 'ZCOOL KuaiLe', cursive;
+    background-image: url("../image/stack-of-love-wooden-blocks-1.jpg");
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 header{
     font-size: 1.2em;
 }
 
+h2{
+    color: white;
+}
+
 .dayCounter{
     text-align: center;
+}
+
+.dayCounter, .todo{
     width: 500px;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.dayCounter .card-header{
+    background-color: #EEE0D3;
 }
 
 .dayCounter .card-body{
@@ -28,10 +42,13 @@ header{
 }
 
 #carouselControls{
-    background-color: lightskyblue;
+    /*background-color: #EEE0D3;*/
+    background-color: rgba(255,255,255,0.5);
     margin: auto;
     width: 500px;
     height: 500px;
+    border: 1px solid;
+    border-radius: 16px;
 }
 
 .carousel-item img{
@@ -39,6 +56,93 @@ header{
     height: auto;
     max-height: 450px;
     max-width: 90%;
+}
+
+.carousel-control-next, .carousel-control-prev{
+    border-radius: 16px;
+    transition: 1s ease;
+}
+
+.carousel-control-next:hover, .carousel-control-prev:hover{
+    background-color: #EEE0D3;
+}
+
+.todo{
+    color: white;
+    width: 500px;
+    padding: 10px;
+    background-color: rgba(255,255,255,0.5);
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.todo h3{
+    padding: 5px;
+}
+
+.add{
+    padding: 5px;
+    margin-bottom: 16px;
+}
+
+.add, .wait_item, .done_item{
+    display: flex;
+    justify-content: space-between;
+}
+
+.add_input{
+    /*border-bottom: 2px solid #EDD29F;*/
+    border: none;
+    background-color: #89D2BA;
+    padding: 5px 10px;
+    font-size: 18px;
+}
+
+.wait,.done{
+    border: 3px solid #EDD29F;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 16px;
+}
+
+.wait_item,.done_item{
+    padding: 5px;
+    margin-bottom: 10px;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+.wait_item_text,.done_item_text{
+    width: 80%;
+    word-break: break-all;
+    padding-left: 10px;
+    font-size: 18px;
+}
+
+.wait_item_id, .done_item_id{
+    display: none;
+}
+
+.wait_item_text_input{
+    width: 100%;
+    border: none;
+    background-color: inherit;
+    font-size: 18px;
+    /*border: 2px solid #EDD29F;*/
+    padding: 2px;
+}
+
+.wait_item_icons,.done_item_icons{
+    display: flex;
+}
+.wait_item_icons_modify,.wait_item_icons_trash,.wait_item_icons_done,.don__item_icons_trash,.done_item_icons_done{
+    margin: 0 5px;
+}
+
+.todo img:hover{
+    opacity: 0.7;
+    cursor: pointer;
 }
 
 .photoContainer{

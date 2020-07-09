@@ -1,22 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const Photo = require('../models/photo');
-
+const ListItem = require('../models/todoListItem');
 
 router.get('/', async (req, res)=>{
    const curDate = new Date().toLocaleDateString();
    //console.log(curDate);
    const daysPassed = datediff(parseDate("2/14/2019"), parseDate(curDate));
-   let photos, comments, blogs;
+   let photos, waitItems, doneItems;
    try{
-      photos = await Photo.find().sort({ postedAt: 'desc'}).limit(5).exec()
+      photos = await Photo.find().sort({ postedAt: 'desc' }).limit(5).exec();
+      waitItems = await ListItem.find({ completed: 'false' }).sort({ postedAt: 'desc' }).exec();
+      doneItems = await ListItem.find({ completed: 'true' }).sort({ postedAt: 'desc' }).exec();
    }catch(e){
       photos = [];
+      waitItems = [];
+      doneItems = [];
       console.log(e)
    }
    res.render('index', {
       dayCount: daysPassed,
-      photos: photos
+      photos: photos,
+      waitItems: waitItems,
+      doneItems: doneItems
    });
 });
 

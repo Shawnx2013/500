@@ -11,7 +11,7 @@ router.post("/", async (req, res)=>{
     let comment = new Comment({
         content: req.body.content,
         author: req.body.author
-    });
+    });0
     try{
         await comment.save();
         res.redirect('/comments')

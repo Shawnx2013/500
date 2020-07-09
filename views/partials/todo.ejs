@@ -1,0 +1,50 @@
+<div class="todo">
+    <h2>我们的To-Do List</h2>
+    <div class="add">
+        <input class="add_input" placeholder="想到啥就写下来吧">
+        <div class="add_icon"><img src="/image/plus-circle2.svg"></div>
+    </div>
+
+    <div class="wait">
+        <h3>To Do</h3>
+        <div class="wait_item_container">
+            <% waitItems.forEach(waitItem => { %>
+                <div class="wait_item">
+                    <div class="wait_item_text"><%= waitItem.content %></div>
+                    <div class="wait_item_id"><%= waitItem.id %></div>
+                    <div class="wait_item_icons">
+                        <div class="wait_item_icons_modify" onclick="">
+                            <img src="/image/edit.svg">
+                        </div>
+                        <div class="wait_item_icons_trash" onclick="deleteItem(<%waitItem.id%>)">
+                            <img src="/image/trash-2.svg">
+                        </div>
+                        <div class="wait_item_icons_done" onclick="completeItem(<%waitItem.id%>)">
+                            <img src="/image/circle.svg">
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <div class="done">
+        <h3>Done</h3>
+        <div class="done_item_container">
+        <% doneItems.forEach(doneItem => { %>
+            <div class="done_item">
+                <div class="done_item_text"><%= doneItem.content %></div>
+                <div class="done_item_id"><%= doneItem.id %></div>
+                <div class="done_item_icons">
+                    <div class="done_item_icons_trash">
+                        <img src="/image/trash-2.svg">
+                    </div>
+                    <div class="done_item_icons_done">
+                        <img src="/image/check-circle.svg">
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+        </div>
+    </div>
+</div>
