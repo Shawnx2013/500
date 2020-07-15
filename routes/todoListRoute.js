@@ -41,11 +41,24 @@ router.post('/', async (req, res)=>{
     }
 });
 
-router.put('/:id', async (req, res) =>{
+router.put('/:id', async (req, res)=>{
     let item;
     try{
         item = await ListItem.findById(req.params.id);
         item.completed = !item.completed;
+        await item.save();
+        res.sendStatus(200);
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/:id/:content', async (req, res)=>{
+    let item;
+    try{
+        item = await ListItem.findById(req.params.id);
+        item.content = req.params.content;
         await item.save();
         res.sendStatus(200);
     }catch(e){

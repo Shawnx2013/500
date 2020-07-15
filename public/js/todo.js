@@ -120,6 +120,9 @@ function addWaitItem(id, content){
         modifyItem(id, content, event);
     };
 
+    /*waitItemIconsModify.addEventListener("click", modifyItem(id, content, event)
+    });*/
+
     //delete
     waitItemIconsTrash.onclick=function(){
         deleteItem(id)
@@ -143,7 +146,15 @@ function modifyItem(id, content, event){
         event=window.addevent || event;
         event.stopPropagation() ? event.stopPropagation() : event.cancelBubble=true;
         document.onclick=function(){
-            waitItemText.innerHTML=waitItemTextInput.value;
+            let xhttp = new XMLHttpRequest();
+            let item = document.getElementById(id).parentElement;
+            xhttp.open('PUT', '/list/' +id +'/' + waitItemTextInput.value, true);
+            xhttp.send();
+            xhttp.onreadystatechange = function(){
+                if (this.readyState === 4 && this.status === 200) {
+                    waitItemText.innerHTML=waitItemTextInput.value;
+                }
+            };
             controlModify=true;
         }
     }
