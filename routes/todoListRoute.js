@@ -42,11 +42,29 @@ router.post('/', async (req, res)=>{
 });
 
 router.put('/:id', async (req, res) =>{
-    res.send('Update')
+    let item;
+    try{
+        item = await ListItem.findById(req.params.id);
+        item.completed = !item.completed;
+        await item.save();
+        res.sendStatus(200);
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
 });
 
 router.delete('/:id', async (req, res)=>{
-    res.send('Delete')
+    let item;
+    //console.log(req.params.id);
+    try{
+        item = await ListItem.findById(req.params.id);
+        await item.remove();
+        res.sendStatus(200);
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500)
+    }
 });
 
 

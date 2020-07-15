@@ -11,18 +11,19 @@
             <% waitItems.forEach(waitItem => { %>
                 <div class="wait_item">
                     <div class="wait_item_text"><%= waitItem.content %></div>
-                    <div class="wait_item_id"><%= waitItem.id %></div>
+
                     <div class="wait_item_icons">
-                        <div class="wait_item_icons_modify" onclick="">
+                        <div class="wait_item_icons_modify" onclick="modifyItem('<%= waitItem.id %>', '<%= waitItem.content %>', event)">
                             <img src="/image/edit.svg">
                         </div>
-                        <div class="wait_item_icons_trash" onclick="deleteItem(<%waitItem.id%>)">
+                        <div class="wait_item_icons_trash" onclick="deleteItem('<%= waitItem.id %>')">
                             <img src="/image/trash-2.svg">
                         </div>
-                        <div class="wait_item_icons_done" onclick="completeItem(<%waitItem.id%>)">
+                        <div class="wait_item_icons_done" onclick="markComplete('<%= waitItem.id %>')">
                             <img src="/image/circle.svg">
                         </div>
                     </div>
+                    <div class="wait_item_id" id="<%= waitItem.id %>"><%= waitItem.id %></div>
                 </div>
             <% }) %>
         </div>
@@ -34,15 +35,16 @@
         <% doneItems.forEach(doneItem => { %>
             <div class="done_item">
                 <div class="done_item_text"><%= doneItem.content %></div>
-                <div class="done_item_id"><%= doneItem.id %></div>
+
                 <div class="done_item_icons">
                     <div class="done_item_icons_trash">
-                        <img src="/image/trash-2.svg">
+                        <img src="/image/trash-2.svg" onclick="deleteItem('<%= doneItem.id %>')">
                     </div>
                     <div class="done_item_icons_done">
-                        <img src="/image/check-circle.svg">
+                        <img src="/image/check-circle.svg" onclick="markIncomplete('<%= doneItem.id %>')">
                     </div>
                 </div>
+                <div class="done_item_id" id="<%= doneItem.id %>"><%= doneItem.id %></div>
             </div>
         <% }) %>
         </div>

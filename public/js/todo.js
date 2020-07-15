@@ -33,6 +33,19 @@ async function clearWaitList(){
     }
 }
 
+async function clearDoneList(){
+    while(done.firstChild){
+        done.removeChild(done.firstChild)
+    }
+}
+
+function removeChild(item){
+    while(item.firstChild){
+        item.removeChild(item.firstChild)
+    }
+    item.remove();
+}
+
 async function fetchWaitItems(){
     //console.log("fetch called");
     await clearWaitList();
@@ -43,9 +56,26 @@ async function fetchWaitItems(){
     xhttp.onreadystatechange = async function () {
         if (this.readyState === 4 && this.status === 200) {
             //console.log("response arrived")
-            await console.log(this.response);
+            //await console.log(this.response);
             this.response.forEach(item => {
                 addWaitItem(item._id, item.content)
+            })
+        }
+    };
+}
+
+async function fetchDoneItems(){
+    await clearDoneList();
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('GET', '/list/completed', true);
+    xhttp.send();
+    xhttp.responseType = "json";
+    xhttp.onreadystatechange = async function () {
+        if (this.readyState === 4 && this.status === 200) {
+            //console.log("response arrived")
+            //await console.log(this.response);
+            this.response.forEach(item => {
+                addDoneItem(item._id, item.content)
             })
         }
     };
@@ -67,6 +97,7 @@ function addWaitItem(id, content){
     waitItemIconsTrash.className="wait_item_icons_trash";
     waitItemIconsDone.className="wait_item_icons_done";
     waitItemId.className="wait_item_id";
+    waitItemId.id=id;
 
     waitItemId.innerHTML=id;
     waitItemText.innerHTML=content;
@@ -86,73 +117,97 @@ function addWaitItem(id, content){
 
     //modify
     waitItemIconsModify.onclick=function(event){
-        if(controlModify){
-            controlModify=false;
-            let waitItemBefore=waitItemText.innerHTML;
-            waitItemText.innerHTML="<input class=\"wait_item_text_input\" type=\"text\">";
-            let waitItemTextInput = document.getElementsByClassName("wait_item_text_input")[0];
-            waitItemTextInput.value = waitItemBefore;
-            waitItemTextInput.focus();
-            event=window.addevent || event;
-            event.stopPropagation() ? event.stopPropagation() : event.cancelBubble=true;
-            document.onclick=function(){
-                waitItemText.innerHTML=waitItemTextInput.value;
-                controlModify=true;
-            }
-        }
+        modifyItem(id, content, event);
     };
 
     //delete
     waitItemIconsTrash.onclick=function(){
-        deleteItem(id);
+        deleteItem(id)
     };
 
     //done
     waitItemIconsDone.onclick=function() {
-        completeItem(id)
+        markComplete(id)
+    }
+}
+
+function modifyItem(id, content, event){
+    if(controlModify){
+        controlModify=false;
+        let waitItem = document.getElementById(id).parentElement;
+        let waitItemText = waitItem.getElementsByClassName('wait_item_text')[0];
+        waitItemText.innerHTML="<input class=\"wait_item_text_input\" type=\"text\">";
+        let waitItemTextInput = waitItem.getElementsByClassName("wait_item_text_input")[0];
+        waitItemTextInput.value = content;
+        waitItemTextInput.focus();
+        event=window.addevent || event;
+        event.stopPropagation() ? event.stopPropagation() : event.cancelBubble=true;
+        document.onclick=function(){
+            waitItemText.innerHTML=waitItemTextInput.value;
+            controlModify=true;
+        }
     }
 }
 
 function deleteItem(id){
     let xhttp = new XMLHttpRequest();
-    xhttp.open('DELETE', '/list/'+id, true);
+    let item = document.getElementById(id).parentElement;
+    xhttp.open('DELETE', '/list/' + id, true);
     xhttp.send();
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200) {
-            //waitItem.parentNode.removeChild(waitItem);
-            console.log(this.response);
+            removeChild(item);
         }
     }
 }
 
-function completeItem(id){
+function markComplete(id){
     if (controlModify) {
         let xhttp = new XMLHttpRequest();
+        let waitItem = document.getElementById(id).parentElement;
         xhttp.open('PUT', '/list/' + id, true);
         xhttp.send();
-        xhttp.onreadystatechange = function () {
+        xhttp.onreadystatechange = async function () {
             if (this.readyState === 4 && this.status === 200) {
-                addDoneItem(waitItemText.innerHTML);
-                waitItem.parentNode.removeChild(waitItem);
+                await fetchDoneItems();
+                removeChild(waitItem);
             }
         }
     }
 }
 
-function addDoneItem(doneContent){
+function markIncomplete(id){
+    if (controlModify){
+        let xhttp = new XMLHttpRequest();
+        let doneItem = document.getElementById(id).parentElement;
+        xhttp.open('PUT', '/list/' + id, true);
+        xhttp.send();
+        xhttp.onreadystatechange = async function () {
+            if (this.readyState === 4 && this.status === 200) {
+                await fetchWaitItems();
+                removeChild(doneItem);
+            }
+        }
+    }
+}
+
+function addDoneItem(id, doneContent){
     let doneItem = document.createElement("div");
     let doneItemText = document.createElement("div");
     let doneItemIcons = document.createElement("div");
     let doneItemIconsModify = document.createElement("div");
     let doneItemIconsTrash = document.createElement("div");
     let doneItemIconsDone = document.createElement("div");
+    let doneItemId = document.createElement("div");
 
     doneItem.className="done_item";
     doneItemText.className="done_item_text";
     doneItemIcons.className="done_item_icons";
     doneItemIconsTrash.className="done_item_icons_trash";
     doneItemIconsDone.className="done_item_icons_done";
+    doneItemId.className="done_item_id";
 
+    doneItemId.innerHTML=id;
     doneItemText.innerHTML=doneContent;
 
     doneItemIconsModify.innerHTML="<img src=\"/image/edit.svg\">";
@@ -163,16 +218,13 @@ function addDoneItem(doneContent){
     doneItemIcons.appendChild(doneItemIconsDone);
     doneItem.appendChild(doneItemText);
     doneItem.appendChild(doneItemIcons);
+    doneItem.appendChild(doneItemId);
 
     done.appendChild(doneItem);
 
     //delete
     doneItemIconsTrash.onclick=function(){
-        let xhttp = new XMLHttpRequest();
-        xhttp.open('DELETE', '/list', true);
-        xhttp.onreadystatechange = function(){
-            waitItem.parentNode.removeChild(waitItem);
-        }
+        deleteItem(id);
     };
 
     //wait

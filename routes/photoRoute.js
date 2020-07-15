@@ -48,7 +48,7 @@ router.get("/:id", async (req, res)=>{
 router.delete("/:id", async (req, res)=>{
    let photo;
    try{
-      photo = await Photo.findById(req.params.id)
+      photo = await Photo.findById(req.params.id);
       await photo.remove();
       res.redirect('/photos');
    }catch{
